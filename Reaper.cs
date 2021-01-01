@@ -12,8 +12,8 @@ using HarmonyLib;
 
 namespace Reaper
 {
-    [BepInPlugin("tech.kyl873.kmod", "KMod", "1.0.0.0")]
-    internal class KMod : BasePlugin
+    [BepInPlugin("tech.kyl873.reaper", "Reaper", "1.0.0.0")]
+    internal class Reaper : BasePlugin
     {
         public static ConfigEntry<bool> AutoLootActive;
 

@@ -72,9 +72,9 @@ namespace Reaper.Patches
 
             if (Input.KeyPressed(ToggleAutoLoot))
             {
-                KMod.AutoLootActive.Value = !KMod.AutoLootActive.Value;
+                Reaper.AutoLootActive.Value = !Reaper.AutoLootActive.Value;
 
-                Audio.playSound(KMod.AutoLootActive.Value ? "beep" : "swoosh");
+                Audio.playSound(Reaper.AutoLootActive.Value ? "beep" : "swoosh");
             }
         }
 
