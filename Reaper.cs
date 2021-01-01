@@ -8,8 +8,6 @@ using DPII;
 
 using HarmonyLib;
 
-#pragma warning disable 649
-
 namespace Reaper
 {
     [BepInPlugin("tech.kyl873.reaper", "Reaper", "1.0.0.0")]
