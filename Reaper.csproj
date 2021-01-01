@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net4.8</TargetFramework>
+    <RootNamespace>Reaper</RootNamespace>
+    <Configurations>Release;Debug</Configurations>
+    <Platforms>x86</Platforms>
+    <OutputPath>bin\</OutputPath>
+	<AppendTargetFrameworkToOutputPath>False</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <Target Name="CopyMod" AfterTargets="AfterBuild">
+	<Copy SourceFiles="bin\Reaper.dll" DestinationFolder="..\BepInEx\plugins\" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300" />
+  </Target>
+  
+  <ItemGroup>
+    <Reference Include="BepInEx.Core, Version=6.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\BepInEx.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx.NetLauncher, Version=6.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\BepInEx.NetLauncher.exe</HintPath>
+    </Reference>
+    <Reference Include="DataStats, Version=1.0.7667.23784, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\DataStats.dll</HintPath>
+    </Reference>
+    <Reference Include="DPII, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\DPII.exe</HintPath>
+    </Reference>
+    <Reference Include="FNA, Version=20.12.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\FNA.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HarmonyX" Version="2.3.1" />
+  </ItemGroup>
+</Project>
