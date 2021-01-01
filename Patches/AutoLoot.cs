@@ -17,7 +17,7 @@ namespace Reaper.Patches
     {
         public static void Postfix()
         {
-            if (!Get.InGameplay || !KMod.AutoLootActive.Value)
+            if (!Get.InGameplay || !Reaper.AutoLootActive.Value)
                 return;
 
             LootCoins();
