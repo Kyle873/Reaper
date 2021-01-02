@@ -20,44 +20,46 @@ namespace Reaper.Patches
             if (!Get.InGameplay || !Reaper.AutoLootActive.Value)
                 return;
 
-            LootCoins();
-            LootItems();
+            Character character = Characters.characters[Characters.getLowestLocalPlayer()];
+
+            LootCoins(character);
+            LootItems(character);
         }
 
-        static void LootCoins()
+        static void LootCoins(Character character)
         {
             foreach (Coin coin in CurrentEnvironment.environment.coins)
                 if (NetVerk.state == OnlineState.offline || NetVerk.state == OnlineState.server)
                 {
                     if (NetVerk.state == OnlineState.server)
-                        OnlineMessages.Add(OnlineMessageType.coinTaken, (byte)Get.Character.playerNo, (short)coin.uniqueID);
+                        OnlineMessages.Add(OnlineMessageType.coinTaken, (byte)character.playerNo, (short)coin.uniqueID);
 
-                    int value = coin.collect(Get.Character);
+                    int value = coin.collect(character);
 
                     if (value > 0)
                     {
-                        if (Get.Character.skillsAndTalents.hasTalent("yuppie"))
-                            Get.Character.giveExperiance((int)MathHelper.Clamp(value / 10f, 1f, 1E+17f));
+                        if (character.skillsAndTalents.hasTalent("yuppie"))
+                            character.giveExperiance((int)MathHelper.Clamp(value / 10f, 1f, 1E+17f));
 
-                        Get.Character.adjustMoney(value, true);
+                        character.adjustMoney(value, true);
                     }
                 }
                 else
                 {
-                    OnlineMessages.Add(OnlineMessageType.coinTaken, (byte)Get.Character.playerNo, (short)coin.uniqueID);
+                    OnlineMessages.Add(OnlineMessageType.coinTaken, (byte)character.playerNo, (short)coin.uniqueID);
                 }
         }
 
-        static void LootItems()
+        static void LootItems(Character character)
         {
             InEnviromentItem item = null;
 
             foreach (InEnviromentItem itemIter in CurrentEnvironment.environment.items)
-                if (!Get.Character.inventory.full(itemIter.id))
+                if (!character.inventory.full(itemIter.id))
                 {
                     ItemStats itemStats = Stats.GetItemStats(itemIter.id);
 
-                    if (itemStats.type == ItemStats.ItemType.useableItem && itemStats.instantUse && !Get.Character.canUseItem(itemIter.id))
+                    if (itemStats.type == ItemStats.ItemType.useableItem && itemStats.instantUse && !character.canUseItem(itemIter.id))
                         Audio.playSound("selectx");
                     else
                         item = itemIter;
@@ -69,16 +71,16 @@ namespace Reaper.Patches
             if (NetVerk.state == OnlineState.offline || NetVerk.state == OnlineState.server)
             {
                 if (NetVerk.state == OnlineState.server)
-                    OnlineMessages.Add(OnlineMessageType.itemTaken, (byte)Get.Character.playerNo, (short)item.uniqueID);
+                    OnlineMessages.Add(OnlineMessageType.itemTaken, (byte)character.playerNo, (short)item.uniqueID);
 
-                Get.Character.pickupItem(item);
+                character.pickupItem(item);
             }
             else
             {
-                OnlineMessages.Add(OnlineMessageType.itemTaken, (byte)Get.Character.playerNo, item);
+                OnlineMessages.Add(OnlineMessageType.itemTaken, (byte)character.playerNo, item);
             }
 
-            Get.Character.showEncumbranceCounter = 180;
+            character.showEncumbranceCounter = 180;
         }
     }
 }

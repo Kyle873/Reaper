@@ -18,6 +18,11 @@ namespace Reaper.Patches
     [HarmonyPatch(typeof(Game1), "Update", typeof(GameTime))]
     internal class ShortcutKeys
     {
+        const Keys SelectP1 = Keys.F9;
+        const Keys SelectP2 = Keys.F10;
+        const Keys SelectP3 = Keys.F11;
+        const Keys SelectP4 = Keys.F12;
+
         const Keys ConsoleKey     = Keys.OemTilde;
         const Keys SaveMenuKey    = Keys.F5;
         const Keys ToggleAutoLoot = Keys.B;
@@ -49,6 +54,15 @@ namespace Reaper.Patches
 
         static void Postfix(GameTime gameTime)
         {
+            if (Input.KeyPressed(SelectP1))
+                Get.PlayerNumber = 0;
+            else if (Input.KeyPressed(SelectP2))
+                Get.PlayerNumber = 1;
+            else if (Input.KeyPressed(SelectP3))
+                Get.PlayerNumber = 2;
+            else if (Input.KeyPressed(SelectP4))
+                Get.PlayerNumber = 3;
+
             if (!Get.InGameplay)
                 return;
 
